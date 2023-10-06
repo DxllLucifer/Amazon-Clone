@@ -2,6 +2,8 @@ import React from 'react'
 import './Checkout.css'
 import SubTotal from './SubTotal'
 import Header from './Header'
+import { UseStateValue } from '../Store/StateProvider'
+import CheckoutProduct from './CheckoutProduct'
 
 function Checkout() {
   const [{basket},dispatch] = UseStateValue()
@@ -16,6 +18,7 @@ function Checkout() {
             {basket.map(item =>(
               
               <CheckoutProduct
+
               id={item.id}
               title={item.title} 
               price={item.price} 
