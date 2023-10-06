@@ -1,8 +1,11 @@
 import React from 'react'
 import '../components/Home.css'
 import Product from './Product'
+import Header from './Header'
 export default function Home() {
   return (
+    <>
+     <Header/>
     <div className='home'>
         <div className="home__container">
             <img className='home__image' src="https://fortheloveblog.com/wp-content/uploads/2016/07/Amazon-Prime-Banner.jpg" alt="img" />
@@ -49,5 +52,7 @@ export default function Home() {
             </div>
         </div>
     </div>
+    </>
+
   )
 }

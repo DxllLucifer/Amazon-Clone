@@ -6,7 +6,7 @@ import amazon__logo from '../Assets/amazon__logo.png'
 import {Link} from 'react-router-dom'
 import { UseStateValue } from '../Store/StateProvider';
 export default function Header() {
-  const [{basket},dispatch] = UseStateValue()
+  const [{basket}] = UseStateValue()
   return (
     <div className='header'>
       <Link to='/' >
@@ -17,10 +17,12 @@ export default function Header() {
         <SearchIcon className='header__searchIcon'/>
       </div>
       <div className="header__nav">
-        <div className="header__option">
-          <span className="header__optionLineOne">Hello User</span>
-          <span className="header__optionLineTwo">Sign In</span>
-        </div>
+        <Link to='/Login'>
+          <div className="header__option">
+            <span className="header__optionLineOne">Hello User</span>
+            <span className="header__optionLineTwo">Sign In</span>
+          </div>
+        </Link>
         <div className="header__option">
           <span className="header__optionLineOne">Return</span>
           <span className="header__optionLineTwo">& Order</span>
