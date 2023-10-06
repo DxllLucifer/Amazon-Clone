@@ -28,7 +28,7 @@ function Login() {
        }
     }
     const handleCreateAccount = ()=>{
-        nav('/signup')
+        nav('/createaccount')
     }
   return (
     <div className="login">
