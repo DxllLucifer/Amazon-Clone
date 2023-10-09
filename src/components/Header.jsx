@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Header.css'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
@@ -6,7 +6,33 @@ import amazon__logo from '../Assets/amazon__logo.png'
 import {Link} from 'react-router-dom'
 import { UseStateValue } from '../Store/StateProvider';
 export default function Header() {
-  const [{basket}] = UseStateValue()
+
+
+  const [{user , basket}, dispatch ] =  UseStateValue()
+  const [isLogIn, setIsLogIn] = useState(false)
+  const handleSignOut = ()=>{
+    localStorage.removeItem('user')
+  }
+  useEffect(() => {
+    debugger
+    if (localStorage.length > 0) {
+      const data = localStorage.getItem('user')
+      const parsedata = JSON.parse(data)
+      dispatch({
+        type:'SET_USER',
+        user: parsedata.user
+      })
+      setIsLogIn(true)
+    }
+    else{
+      dispatch({
+        type:'SET_USER',
+        user:null
+      })
+      setIsLogIn(false)
+    }
+  },[])
+  
   return (
     <div className='header'>
       <Link to='/' >
@@ -17,12 +43,16 @@ export default function Header() {
         <SearchIcon className='header__searchIcon'/>
       </div>
       <div className="header__nav">
-        <Link to='/Login'>
+       {!isLogIn &&  <Link to='/Login'>
           <div className="header__option">
-            <span className="header__optionLineOne">Hello User</span>
+            <span className="header__optionLineOne">Hello Guest</span>
             <span className="header__optionLineTwo">Sign In</span>
           </div>
-        </Link>
+        </Link>}
+        {isLogIn && <div className="header__option" onClick={handleSignOut}>
+            <span className="header__optionLineOne">{user.username}</span>
+            <span className="header__optionLineTwo">Sign out</span>
+        </div>}
         <div className="header__option">
           <span className="header__optionLineOne">Return</span>
           <span className="header__optionLineTwo">& Order</span>
