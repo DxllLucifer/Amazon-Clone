@@ -11,10 +11,11 @@ import {loadStripe} from '@stripe/stripe-js';
 const stripePromise = loadStripe('pk_test_51NzETXSAwEjeVFDPygMmEGp8KuNkcJymBL0eag9xl2QIm5XzymrZe2zdMMf56TxtEWtXNbSu7ZW5V9fgaaOknYdt00HLjKFqLv');
 
 function App() {
+ 
   return (
     <Router>
       <div className="app">
-        <Elements stripe={stripePromise} >
+        <Elements stripe={stripePromise}  > 
           <Routes >
           <Route path='/Login' element={<Login/>} />
           <Route path='/Createaccount' element={<SignUp/>} />
