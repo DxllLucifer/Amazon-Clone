@@ -7,12 +7,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import {  CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import CurrencyFormat from 'react-currency-format'
 import { getBasketTotal } from '../Store/Reducer'
-import {PaymentElement} from '@stripe/react-stripe-js';
+// import {PaymentElement} from '@stripe/react-stripe-js';
 import axios from 'axios'
 
 function Payment() {
     const nav = useNavigate()
-    const [{user , basket} ] =  UseStateValue();
+    const [{user , basket},dispatch ] =  UseStateValue();
     const [succeeded, setSucceeded] = useState(false);
     const [processing, setProcessing] = useState('')
 
@@ -24,13 +24,13 @@ function Payment() {
     
     useEffect(() => {
       const getClientSecrete = async ()=>{
-        const response = await axios.post(`http://localhost:5000/payment/create?total=${getBasketTotal(basket)* 100 }`)
+        const response = await axios.post(`http://localhost:5000/payment/create?total=${getBasketTotal(basket) * 100 }`)
+        console.log(response.data.message)
         setClientSecret(response.data.clientSecret)
       }
       getClientSecrete();
     }, [basket])
     
-
     const handleSubmit =async(event)=>{
         event.preventDefault();
         setProcessing(true);
@@ -42,9 +42,12 @@ function Payment() {
             // paymentIntent = paymentconfirmation
             setSucceeded(true);
             setError(null)
-            setProcessing(false)
+            setProcessing(false);
+            dispatch({
+                type:'EMPTY_BASKET'
+            })
 
-            nav('/orders')
+            nav('/order')
         })
     }
     const handleChange =(event)=>{
@@ -110,10 +113,10 @@ function Payment() {
                              <button disabled = {processing || disabled || succeeded}> <span> {processing ? <p>processing</p> : 'Buy Now' } </span> </button>
                         </div>
                      </form>
-                     <form>
+                     {/* <form>
                         <PaymentElement />
                         <button>Submit</button>
-                     </form>
+                     </form> */}
                     </div>
                 </div>
             </div>
